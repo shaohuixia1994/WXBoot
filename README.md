@@ -9,6 +9,8 @@
 
 ## 1.将lib文件夹放到小程序项目同层目录下
 
+### 1）常规安装
+
 ```js
 lib/
    wxboot.js
@@ -18,12 +20,22 @@ lib/
 pages/
 ```
 
+### 2）npm安装
+
+```
+npm init
+npm i wxbootstart
+```
+
+
+
 ## 2.引入并挂载
 
 ### 1）程序引入
 
 ```js
-const WXBoot = require('./lib/wxboot');
+const WXBoot = require('./lib/wxboot');//常规安装
+const {WXBoot} = require('wxbootstart');//npm 安装
 //将App({})修改为
 WXBoot.A({
     config:{
