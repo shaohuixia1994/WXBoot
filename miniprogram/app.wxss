@@ -1,0 +1,31 @@
+page {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: PingFangSC-Regular,"Helvetica Neue",tahoma,arial,sans-serif;
+  font-size: 14px;
+}
+
+@media screen and (max-width:350px) {
+  page {
+      font-size: 12px;
+  }
+}
+
+@media screen and (min-width:351px) and (max-width:699px) {
+  page {
+      font-size: 14px;
+  }
+}
+
+@media screen and (min-width:700px) and (max-width:1000px) {
+  page {
+      font-size: 16px;
+  }
+}
+
+@media screen and (min-width:1001px) {
+  page {
+      font-size: 18px;
+  }
+}

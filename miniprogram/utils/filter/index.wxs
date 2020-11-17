@@ -1,0 +1,91 @@
+var Filter = ({
+    number2chn: (function(num) {
+        if (num >= 10000 && num < 100000000) {
+            num = (num / 10000).toFixed(1);
+            return (num + '万')
+        } else if (num >= 100000000) {
+            num = (num / 100000000).toFixed(1);
+            return (num + '亿')
+        } else {
+            return (num)
+        }
+    }),
+    formatdate: (function(t) {
+        if (!t) return;;
+        var date = getDate(t * 1000);
+        console.log(date);
+        var Y = date.getFullYear() + '-';
+        var M = date.getMonth() + 1 + '-';
+        var D = date.getDate();
+        return ('·' + M + D)
+    }),
+    formatdateNormal: (function(t) {
+        if (!t) return;;
+        var date = getDate(t * 1000);
+        console.log(date);
+        var Y = date.getFullYear() + '-';
+        var M = date.getMonth() + 1 + '-';
+        var D = date.getDate();
+        return (Y + M + D)
+    }),
+    formatdateDetail: (function(t) {
+        if (!t) return;;
+        var date = getDate(t * 1000);
+        var H = date.getHours();
+        var M = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+        return (H + ':' + M)
+    }),
+    formattime: (function(n) {
+        var hour;
+        var min;
+        var sec;
+        var secStr;
+        var minStr;
+        if (n < 60) {
+            secStr = n < 10 ? "0" + n : n;
+            return ("00:" + secStr)
+        } else if (n < 3600) {
+            sec = n % 60;
+            min = parseInt(n / 60);
+            secStr = sec < 10 ? "0" + sec : sec;
+            minStr = min < 10 ? "0" + min : min;
+            return (minStr + ":" + secStr)
+        } else {
+            sec = n % 60;
+            min = parseInt((n % 3600) / 60);
+            hour = parseInt(n / 3600);
+            secStr = sec < 10 ? "0" + sec : sec;
+            minStr = min < 10 ? "0" + min : min;
+            return (hour + ":" + minStr + ":" + secStr)
+        }
+    }),
+    formatSearchDuration: (function(n) {
+        var timeAry = n.split(':');
+        var hour;
+        var minute;
+        var second;
+        if (timeAry[(0)] > 0) {
+            hour = Math.floor(timeAry[(0)] / 60);
+            minute = timeAry[(0)] - hour * 60
+        } else {
+            minute = 0
+        };
+        second = timeAry[(1)];
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        if (hour) {
+            hour = hour < 10 ? ('0' + hour) : hour;
+            return (hour + ':' + minute + ':' + second)
+        } else {
+            return (minute + ':' + second)
+        }
+    }),
+});
+module.exports = ({
+    number2chn: Filter.number2chn,
+    formatdate: Filter.formatdate,
+    formattime: Filter.formattime,
+    formatdateNormal: Filter.formatdateNormal,
+    formatdateDetail: Filter.formatdateDetail,
+    formatSearchDuration: Filter.formatSearchDuration,
+});

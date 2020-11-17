@@ -1,0 +1,40 @@
+<comps binding="$" ref="header"></comps>
+ <view> globalData:ip：{{store.id}}</view>
+ <view> pageStore:ip：{{id}}</view>
+ <button bindtap="changeId">changeId</button>
+<view class="intro">
+    蜡笔小新一家人
+</view>
+<button size="mini" bindtap="route">ces</button>
+<view class='btns'>
+    <button size="mini" bindtap="timeFastForward">五年后</button>
+
+    <button size="mini" bindtap="timeRandom">随机穿梭</button>
+</view>
+
+<view>姓名： name -
+    <text class="item">{{ name }}</text>
+</view>
+<view>信息： height -
+    <text class="item">{{ info.height }}</text>， color -
+    <text class="item">{{ info.color }}</text>
+</view>
+<view>描述： age - <text class="item">{{ desc[0].age }}</text>，hi -
+    <text class="item">{{ desc[1] }}</text>
+</view>
+<view class="family">家庭： num - <text class="item">{{ family[0].num }}</text>，<text class="item">{{ family[1] }}</text>：
+    <view>dad -
+        <text class="item">{{ family[2][0].dad }}</text>
+    </view>
+    <view>mum -
+        <text class="item">{{ family[2][1].mum}}</text>
+    </view>
+    <view>son -
+        <text class="item">{{ family[2][2].son }}</text>
+    </view>
+    <view>dog -
+        <text class="item">{{ family[2][3].dog }}</text>，
+        <text class="item">{{ family[2][3].color }}</text>
+    </view>
+
+</view>

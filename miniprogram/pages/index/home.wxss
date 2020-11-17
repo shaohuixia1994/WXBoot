@@ -1,0 +1,22 @@
+.intro {
+	margin: 30px;
+	text-align: center;
+	font-size: 36rpx;
+	font-weight: 600;
+}
+
+.btns {
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 40rpx;
+}
+
+.item {
+	color: seagreen;
+}
+
+.family view {
+	margin-left: 60rpx;
+	margin-top: 10rpx;
+
+}

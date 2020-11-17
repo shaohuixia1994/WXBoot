@@ -1,0 +1,5 @@
+
+
+<button bindtap="changeId">changeId</button>
+
+<view>{{store.id}}</view>
