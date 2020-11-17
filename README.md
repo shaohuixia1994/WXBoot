@@ -9,7 +9,7 @@
 
 ## 1.将lib文件夹放到小程序项目同层目录下
 
-```
+```js
 lib/
    wxboot.js
    obaa.js
@@ -179,7 +179,7 @@ WXBoot.A({
 
     - `cb` 可选，异步删除的时候回调，接收参数：cb(err, data), err不为空代表失败。
 
-  ```
+  ```js
   Page.P({
     onLoad: function () {
       // 同步写
@@ -244,7 +244,7 @@ WXBoot.A({
 
   示例：
 
-  ```
+  ```js
   this.$put('play:prefetch', new Promise(function (resolve, reject) {
     wx.request(url, function (err, data) {
       resolve(data)
@@ -462,7 +462,7 @@ Page.P('{PNAME}',{
 
 {COMPONENT}.js
 
-```
+```js
 Component.C({
   data: {},
   attached: function () {
@@ -476,7 +476,7 @@ Component.C({
 
 {COMPONENT}.json
 
-```
+```json
 {
   "component": true
 }
@@ -486,7 +486,7 @@ Component.C({
 
 {PAGE}.json
 
-```
+```json
 {
   "usingComponents": {
     "{COMPONENT}": "/comps/{COMPONENT}/{COMPONENT}"
@@ -496,7 +496,7 @@ Component.C({
 
 {PAGE}.wxml
 
-```
+```html
 <custom-component binding="$" />
 ```
 
@@ -540,7 +540,7 @@ Component.C({
 
   wx.`navigateTo`的封装。跳转到指定页面，pagename 可以带上 `queryString`, 例如
 
-  ```
+  ```js
   this.$route('play?vid=xxx&cid=xxx');
   ```
 
@@ -548,7 +548,7 @@ Component.C({
 
   wx.`redirectTo`的封装。跳转到指定页面, **替换页面，不产生历史**，pagename 可以带上 `queryString`, 例如
 
-  ```
+  ```js
   this.$redirect('play?vid=xxx&cid=xxx');
   ```
 
@@ -603,7 +603,7 @@ Component.C({
 
 在组件内获取父组件实例引用
 
-```
+```js
 Component.C({
   attached: function () {
     this.$parent.data // 父组件
@@ -616,7 +616,7 @@ Component.C({
 
   指定了 `ref` 的子组件实例Map，在父组件获取子组件引用：
 
-```
+```js
 <custom-component binding="$" ref="customComp"/>
 Page.P({
   onLoad: function () {
@@ -638,6 +638,72 @@ Page.P({
 
   指定了 `ref` 的子组件实例Map
 
+#### 页面-生命周期
+
+- **onPageLaunch()**
+
+  小程序第一次运行的时候调用，此时对应的页面并未被加载。
+
+- **onAppLaunch(opts)**
+
+  App.onLaunch 触发时调用。 opts:
+
+  - `path` String 打开小程序的路径
+  - `query` Object 打开小程序的query
+  - `scene` Number 打开小程序的场景值
+
+- **onAppShow(opts)**
+
+  App.onShow 第一次触发时调用。只会触发一次，需要多次调用的请使用原生的 App.onShow opts:
+
+  - `path` String 打开小程序的路径
+  - `query` Object 打开小程序的query
+  - `scene` Number 打开小程序的场景值
+
+- **onAwake(time`<Number>`)**
+
+  小程序进入后台模式后再激活的时候触发。`time`是耗时。
+
+- **onPreload(res)**
+
+  使用url时候{'PNAME'}和页面全路径须符合路由转换
+
+  ```js
+  /**如页面全路径 /pages/index/index 
+  *  PNAME index  
+  *  config.route  /pages/$page/$page
+  */
+  ```
+
+  调用 this.**$preload**({'PNAME'}) 的时候触发，此时对应的页面并未被加载，`res`:
+
+  ```
+  {
+    url: '', //{'PNAME'}
+    query: {} //url上解析出来的查询参数
+  }
+  ```
+
+- **onNavigate(res)**
+
+  使用时候{'PNAME'}和页面全路径须符合路由转换
+
+  ```js
+  /**如页面全路径 /pages/index/index 
+  *  PNAME index  
+  *  config.route  /pages/$page/$page
+  */
+  ```
+
+  页面间跳转开始时调用，此时对应的页面并未被加载，`res`:
+
+  ```json
+  {
+    url: '', //完整的来源url
+    query: {} //url上解析出来的查询参数
+  }
+  ```
+
 #### 页面-实例方法
 
 - **$setData**([prefix<`String`>, ]obj)
@@ -658,7 +724,7 @@ Page.P({
 
   wx.`navigateTo`的封装。跳转到指定页面，pagename 可以带上 `queryString`, 例如
 
-  ```
+  ```js
   this.$route('play?vid=xxx&cid=xxx');
   ```
 
@@ -666,7 +732,7 @@ Page.P({
 
   wx.`redirectTo`的封装。跳转到指定页面, **替换页面，不产生历史**，pagename 可以带上 `queryString`, 例如
 
-  ```
+  ```js
   this.$redirect('play?vid=xxx&cid=xxx');
   ```
 
@@ -682,7 +748,7 @@ Page.P({
 
   wx.`navigateBack`的封装。
 
-  ```
+  ```js
   this.$back();
   ```
 
@@ -690,7 +756,7 @@ Page.P({
 
   提前预加载指定页面（会触发对应页面的`onPreload`声明周期）
 
-  ```
+  ```js
   this.$preload('play?vid=xxx&cid=xxx');
   ```
 
@@ -703,7 +769,7 @@ Page.P({
 
   示例：
 
-  ```
+  ```js
   <button
     bindtap="$bindRoute"
     data-url="/pages/play"
