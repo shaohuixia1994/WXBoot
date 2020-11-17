@@ -1,5 +1,5 @@
 //app.js
-const WXBoot = require('./lib/wxboot');
+const {WXBoot} = require('wxbootstart');
 import api from "./utils/api"
 WXBoot.A({
   config: {
