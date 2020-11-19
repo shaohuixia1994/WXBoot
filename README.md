@@ -122,16 +122,16 @@ WXBoot.A({
 ```js
 import constants from "./constants/constants"
 WXBoot.A({
-	config:{
+  config:{
         route:'/pages/$page/$page', //必须指定路由。使用路由方法用
         consts:constants 
     }
 })
-//页面使用
-	//constants对象
-	this.$consts //constants
-	//动态生成
-	this.$constUsername //constants.username 
+  //页面使用
+  //constants对象
+  this.$consts //constants
+  //动态生成
+  this.$constUsername //constants.username 
 ```
 
 # 
