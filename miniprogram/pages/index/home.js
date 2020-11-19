@@ -20,6 +20,8 @@ Page.P('in',{
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(this.$constants);
+    console.log(this.$conUsername);
     this.$bindFunction("test",function (e) {
       console.log(e)
     })

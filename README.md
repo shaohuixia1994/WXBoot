@@ -73,12 +73,14 @@ Component.C({
 
 ```js
 const WXBoot = require('./lib/wxboot');
-import api from "./utils/api"
+import api from "./utils/api";
+import constants from "./constants/constants"
 //将App({})修改为
 WXBoot.A({
     config:{
-        route:'/pages/$page/$page' //必须指定路由。使用路由方法用
-        pageApi:api //页面挂载方法,挂载后可以直接用this调用
+        route:'/pages/$page/$page', //必须指定路由。使用路由方法用
+        pageApi:api,//页面挂载方法,挂载后可以直接用this调用
+        consts:constants 
     }
 })
 
@@ -114,6 +116,25 @@ WXBoot.A({
   //使用全局仓库需要在app.js对数据进行初始化。可以通过引入js的方式导入    
 })
 ```
+
+## 3.全局常量仓库
+
+```js
+import constants from "./constants/constants"
+WXBoot.A({
+	config:{
+        route:'/pages/$page/$page', //必须指定路由。使用路由方法用
+        consts:constants 
+    }
+})
+//页面使用
+	//constants对象
+	this.$consts //constants
+	//动态生成
+	this.$constUsername //constants.username 
+```
+
+# 
 
 # 三、页面方法
 

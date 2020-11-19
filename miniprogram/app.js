@@ -1,10 +1,13 @@
 //app.js
-const {WXBoot} = require('wxbootstart');
+// const {WXBoot} = require('wxbootstart');
+const WXBoot = require('./lib/wxboot');
 import api from "./utils/api"
+import constants from "./constants/constants"
 WXBoot.A({
   config: {
     route: '/pages/$page/$page',
-    pageApi:api
+    pageApi:api,
+    consts:constants
   },
   onLaunch: function (opts) {
 
