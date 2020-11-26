@@ -1070,7 +1070,7 @@ function WXBoot(name, option) {
 
 	//back option增加this.upData this.Empty
 	option.$upData = function(data){
-		return wxUpdata(data,this);
+		return this.setData(objToPath(data));
 	};
 	option.Empty = Empty;
 	option.$App = getApp();
