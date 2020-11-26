@@ -20,7 +20,7 @@ Page.P('in',{
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    console.log(this.$constants);
+    console.log(this.$consts);
     console.log(this.$conUsername);
     this.$bindFunction("test",function (e) {
       console.log(e)
@@ -37,7 +37,7 @@ Page.P('in',{
 console.log(api)
     //  this.$bindApi(api)
    
-    console.log( this.store)
+    
     console.log(this.Empty);
     console.log(this.$globalData());
    this.$globalData().loginTime=1;
@@ -139,7 +139,7 @@ timeRandom() {
    */
   onShow: function () {
     this.$preload("pindex");
-    console.log(this.globalData);
+    console.log(this.$globalData);
     this.$bindPageStore(pageData)
     
     // this.$bindStore("store",function(e){

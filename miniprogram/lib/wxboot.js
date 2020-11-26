@@ -1305,7 +1305,7 @@ function bindConstants(constants,_self){
 		if (constants.hasOwnProperty(constantName)) {
 			const constantValue = constants[constantName];
 				//动态生成 绑定方法方法
-				_self['$const'+constantName.substring(0, 1).toUpperCase() + constantName.substring(1)]=constantValue;
+				_self['$con'+constantName.substring(0, 1).toUpperCase() + constantName.substring(1)]=constantValue;
 		}
 	}		
 };
