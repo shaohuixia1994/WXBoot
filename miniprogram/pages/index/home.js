@@ -19,18 +19,24 @@ Page.P('in',{
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
     console.log(this.$constants);
     console.log(this.$conUsername);
     this.$bindFunction("test",function (e) {
       console.log(e)
     })
     this.test("test cessss")
+    this.$setData({
+      list:[1,2,3,4,5]
+    })
+    const flag=  await this.confirm({title:"222"})
+    this.$setData({
+      list:[,,1]
+    })
   
 console.log(api)
     //  this.$bindApi(api)
-    this.ceshi()
-    this.warn()
+   
     console.log( this.store)
     console.log(this.Empty);
     console.log(this.$globalData());
@@ -101,7 +107,7 @@ timeRandom() {
     // noinspection JSConsecutiveCommasInArrayLiteral
     let start  = +new Date();
     for (let index = 0; index < 1000; index++) {
-        this.$upData({
+        this.$setData({
             info: { height: this.randomNum(100, 70) },
             desc: [{ age: this.randomNum(0, 50) },
                 ['帅哥', '靓仔', '衰仔', '婴儿', '油腻大叔'][this.randomNum(0, 4)]],
