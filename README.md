@@ -131,7 +131,7 @@ WXBoot.A({
   //constants对象
   this.$consts //constants
   //动态生成
-  this.$constUsername //constants.username 
+  this.$conUsername //constants.username 
 ```
 
 # 
