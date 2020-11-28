@@ -9,14 +9,11 @@
 
 ## 1.将lib文件夹放到小程序项目同层目录下
 
-### 1）常规安装
+### 1）常规安装（仅26KB）
 
 ```js
 lib/
    wxboot.js
-   obaa.js
-   path.js
-   wx-updata.js
 pages/
 ```
 
@@ -35,7 +32,7 @@ npm i wxbootstart
 
 ```js
 const WXBoot = require('./lib/wxboot');//常规安装
-const {WXBoot} = require('wxbootstart');//npm 安装
+const WXBoot = require('wxbootstart');//npm 安装
 //将App({})修改为
 WXBoot.A({
     config:{

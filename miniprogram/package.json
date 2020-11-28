@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "wx-updata": "^0.0.12",
-    "wxbootstart": "^1.0.0"
+    "wxbootstart": "^1.0.8"
   },
   "devDependencies": {},
   "scripts": {
