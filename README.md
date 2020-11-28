@@ -4,6 +4,58 @@
 
 [TOC]
 
+# 云开发方法工具封装
+
+## 1.云开发初始化
+
+
+
+```js
+APP.js
+const WXBoot = require('./lib/wxboot');//常规安装
+const WXBoot = require('wxbootstart');//npm 安装
+WXBoot.A({
+    config:{
+        route:'/pages/$page/$page', //必须指定路由。使用路由方法用
+        pageApi:api,//页面挂载方法,挂载后可以直接用this调用
+        consts:constants,//页面全局常量参数
+         initCloud:{ 
+             // env: '',
+           traceUser: true,},//初始化云开发参数
+    }
+})
+
+```
+
+## 2.全局方法
+
+
+
+```js
+this.$getOpenid();//app.js 和 page.js可用 //async函数 优先：内存>缓存>云函数(需创建默认函数getWXContext)
+this.$db() 或 this.db 均可以取到当前页面唯一 wx.cloud.database()实例
+this.collection("collectionName") 当前页面数据表对应的唯一实例
+```
+
+## 3.云函数插件（utils/cloudUtils.js）
+
+页面挂载参见config
+
+```js
+page.js async函数
+this.callFunction(options) //相当于wx.cloud.callFunction(options)
+this.getById(collectionName,id) //返回data  报警返回{}  报警 "collection":"${collectionName}","_id":"${id}"不存在
+this.getByParams(collectionName,params) //返回data数组 报警返回[] 报警 "collection":"${collectionName}"不存在
+//默认参数 {where:null,order:null,skip:0,limit:20,field:null,pageIndex:1},
+/*{
+*  where:{name:"wxboot",_openid:"{openid}"},// 支持{openid} 替换成用户openid
+*  order:{name:"name",value:"desc"}或[{name:"name",value:"desc"},{name:"title",value:"asc"}]
+*  如果存在pageIndex 按页码 和limit 取值 pageIndex从1 开始
+* }
+*/
+```
+
+
 
 # 一、快速启动
 
@@ -77,7 +129,10 @@ WXBoot.A({
     config:{
         route:'/pages/$page/$page', //必须指定路由。使用路由方法用
         pageApi:api,//页面挂载方法,挂载后可以直接用this调用
-        consts:constants 
+        consts:constants,//页面全局常量参数
+         initCloud:{ 
+             // env: '',
+           traceUser: true,},//初始化云开发参数
     }
 })
 
@@ -428,15 +483,15 @@ module.exports = {
 
 > [wx-updata](https://github.com/SHERlocked93/wx-updata)
 >
-> //page页面使用
+> //page页面使用 
 
-**$setData**([prefix<`String`>, ]obj)
+**$setData**([prefix<`String`>, ]obj) //数组覆盖
 
 指定 `prefix` 的时候可以为data的每一个项添加访问路径前缀。不传相当于 **setData(obj)**
 
-**$upData**(obj)
+**$upData**(obj,prefix,store,config)
 
-相当于 **setData(obj)**
+参见wx-updata
 
 **Empty** 
 
@@ -446,7 +501,7 @@ this.Empty
  this.$upData({
         info: { height: 155 },
         desc: [{ age: 13 }, '帅哥'],
-        family: [this.Empty, this.Empty, [this.Empty, this.Empty, this.Empty, { color: '灰色' }]]
+        family: [this.Empty, , [this.Empty, this.Empty, this.Empty, { color: '灰色' }]]
     })
 ```
 

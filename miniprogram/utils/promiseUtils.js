@@ -1,8 +1,41 @@
 module.exports = {
   confirm: confirm,
   promisify: promisify,
-  promiseApi:promiseApi
+  promiseApi:promiseApi,
+  request:request
 }
+
+
+//method:GET dataType:json responseType:text header['content-type'] 为 application/json / post 注意改为application/x-www-form-urlencoded
+async function request(options) {
+  const host="";
+  options.url =host+ (options.url||"");
+  const defaultOptions = {url:host}
+
+  const requestPro = promisify(wx.request);
+  return await requestPro(setDefaultOptions(options,defaultOptions)).then(res => {
+    return   Object.assign(res,{status:"success"}); 
+  }).catch(res=>{ 
+    return  Object.assign(res,{status:"fail"}); 
+  })
+}
+
+
+
+
+async function confirm(options) {
+  const defaultOptions = {title:"操作提示",content:"确认执行么？"}
+  const showModalPro = promisify(wx.showModal);
+  return await showModalPro(setDefaultOptions(options,defaultOptions)).then(res => {
+    if (res.confirm) {
+      return true;
+    } else if (res.cancel) {
+      return false;
+    }
+  })
+}
+
+
 async function promiseApi(api,option={},defaultOptions={}){
   const apiPromise = promisify(api);
   return await apiPromise(setDefaultOptions(option,defaultOptions)).then(res=>{
@@ -12,17 +45,6 @@ async function promiseApi(api,option={},defaultOptions={}){
   })
 }
 
-async function confirm(modal) {
-  const defaultOptions = {title:"操作提示",content:"确认执行么？"}
-  const showModalPro = promisify(wx.showModal);
-  return await showModalPro(setDefaultOptions(modal,defaultOptions)).then(res => {
-    if (res.confirm) {
-      return true;
-    } else if (res.cancel) {
-      return false;
-    }
-  })
-}
 
 function setDefaultOptions(options={}, defaultOptions={}) {
   return Object.assign(defaultOptions, options);

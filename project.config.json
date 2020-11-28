@@ -19,7 +19,7 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
+    "useMultiFrameRuntime": false,
     "useApiHook": true,
     "babelSetting": {
       "ignore": [],
@@ -36,7 +36,7 @@
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
-  "appid": "wx3e6eba03342592ac",
+  "appid": "wx1fae21084cf1c4ce",
   "projectname": "tidy-up",
   "libVersion": "2.13.0",
   "simulatorType": "wechat",

@@ -20,6 +20,17 @@ Page.P('in',{
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    console.log(await this.$getOpenid())
+  
+    const  db = this.collection("article");
+   console.log(this.collectionList)
+  
+   const  db2 = this.collection("article")
+  console.log(await this.getById("article","22"))
+  console.log(await this.getByParams("article",{
+    where:{_openid:"{openid}"},
+    order:[{name:"name",value:"desc"}]
+  }))
     console.log(this.$consts);
     console.log(this.$conUsername);
     this.$bindFunction("test",function (e) {
@@ -144,7 +155,7 @@ timeRandom() {
    */
   onShow: function () {
     this.$preload("pindex");
-    console.log(this.$globalData);
+    console.log(this.$globalData());
     this.$bindPageStore(pageData)
     
     // this.$bindStore("store",function(e){
