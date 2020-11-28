@@ -1,5 +1,5 @@
 // miniprogram/pages/index/index.js
-import api from "../../utils/api"
+import api from "../../utils/promiseUtils"
 var pageData={
   id:2
 }
@@ -29,7 +29,12 @@ Page.P('in',{
     this.$setData({
       list:[1,2,3,4,5]
     })
-    const flag=  await this.confirm({title:"222"})
+   
+    if(await this.confirm({title:"222"})){
+      console.log("confirm")
+    }else{
+      console.log("confirmno")
+    }
     this.$setData({
       list:[,,1]
     })

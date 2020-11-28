@@ -1,4 +1,4 @@
-import api from './api'
+import promiseUtils from './promiseUtils'
 import log from './log'
-console.log(api)
-module.exports = Object.assign({},api,log)
+
+module.exports = Object.assign({},promiseUtils,log)

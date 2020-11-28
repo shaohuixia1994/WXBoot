@@ -1,13 +1,13 @@
 //app.js
 // const {WXBoot} = require('wxbootstart');
 const WXBoot = require('./lib/wxboot');
-import api from "./utils/api"
+import utils from "./utils/utils"
 import constants from "./constants/constants"
 WXBoot.A({
   config: {
     route: '/pages/$page/$page',
-    pageApi:api,
-    consts:constants
+    pageApi: utils,
+    consts: constants
   },
   onLaunch: function (opts) {
 
@@ -29,12 +29,14 @@ WXBoot.A({
     //   })
     // }
 
-   
+
   },
-store:{id:0},
+  store: {
+    id: 0
+  },
   globalData: {
     version: "v1.0.0",
-    id:0,
+    id: 0,
     userInfo: null,
     addressInfo: null,
     sessionKey: null,
@@ -42,12 +44,6 @@ store:{id:0},
     openid: "",
     theme: {
       color: "#FFFFFF"
-    },
-    modal: {
-      confirmText: "确定",
-      confirmColor: "#7CA7D2",
-      cancelText: "取消",
-      cancelColor: "#999999"
     },
     share: {
       title: "开启一天好运",
