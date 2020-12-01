@@ -2,7 +2,8 @@ module.exports = {
   confirm: confirm,
   promisify: promisify,
   promiseApi:promiseApi,
-  request:request
+  request:request,
+  canUseXXX:canUseXXX
 }
 
 
@@ -33,6 +34,22 @@ async function confirm(options) {
       return false;
     }
   })
+}
+
+async function canUseXXX(options) {
+  const auth = this.$getStore("auth");
+
+  if(!auth.canUseXXX){
+  const defaultOptions = {title:"操作提示",content:"同意授权隐私？"}
+  const showModalPro = promisify(wx.showModal);
+  return await showModalPro(setDefaultOptions(options,defaultOptions)).then(res => {
+    if (res.confirm) {
+      auth.canUseXXX = true;
+    } else if (res.cancel) {
+      auth.canUseXXX = false;
+    }
+  })}
+  return auth.canUseXXX;
 }
 
 

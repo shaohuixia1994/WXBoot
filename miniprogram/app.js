@@ -34,6 +34,11 @@ App.A({
   store: {
     id: 0
   },
+
+  auth:{
+    canUseXXX:false
+  },
+
   globalData: {
     version: "v1.0.0",
     id: 0,

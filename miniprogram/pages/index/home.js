@@ -44,7 +44,7 @@ Page.P('in',{
       list:[1,2,3,4,5]
     })
    
-    if(await this.confirm({title:"222"})){
+    if(await this.canUseXXX()){
       console.log("confirm")
     }else{
       console.log("confirmno")

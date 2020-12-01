@@ -26,8 +26,12 @@ Page.P("pindex",{
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    
+  onLoad: async function (options) {
+    if(await this.canUseXXX()){
+      console.log("confirm")
+    }else{
+      console.log("confirmno")
+    }
   },
 
   /**
