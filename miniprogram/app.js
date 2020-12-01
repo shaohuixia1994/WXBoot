@@ -2,7 +2,7 @@
 // const {WXBoot} = require('wxbootstart');
 
 
-const WXBoot = require('./utils/wxboot-min');
+const WXBoot = require('./lib/wxboot');
 console.log(WXBoot)
 import utils from "./utils/utils"
 import constants from "./constants/constants"
