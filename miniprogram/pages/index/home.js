@@ -21,16 +21,19 @@ Page.P('in',{
    */
   onLoad: async function (options) {
     console.log(await this.$getOpenid())
-  
+    console.log(await this.add("article",{auth:"{openid}"},true))
     const  db = this.collection("article");
    console.log(this.collectionList)
   
    const  db2 = this.collection("article")
-  console.log(await this.getById("article","22"))
+  console.log(await this.getById("article","6127fe145fc23579007fb63e1c15f221"))
+  console.log(await this.updateById("article","6127fe145fc23579007fb63e1c15f221",{name:1}))
   console.log(await this.getByParams("article",{
     where:{_openid:"{openid}"},
     order:[{name:"name",value:"desc"}]
   }))
+  console.log(await this.updateByParams("article",
+  {auth:"{openid}"},{name:10}))
     console.log(this.$consts);
     console.log(this.$conUsername);
     this.$bindFunction("test",function (e) {

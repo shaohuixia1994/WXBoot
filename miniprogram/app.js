@@ -3,21 +3,26 @@
 
 
 const WXBoot = require('./lib/wxboot');
+console.log(WXBoot)
 import utils from "./utils/utils"
 import constants from "./constants/constants"
-WXBoot.A({
+App.A({
   config: {
     initCloud:{ 
       // env: '',
     traceUser: true,},
     route: '/pages/$page/$page',
     pageApi: utils,
-    consts: constants
+    consts: constants,
+    updata:{
+      arrObjPath:false,
+      arrCover:false
+    }
 
   },
   onLaunch: function (opts) {
 
-    WXBoot.on('some_message', function (msg) {
+    App.A.on('some_message', function (msg) {
       console.log('Receive message:', msg)
     })
     console.log('APP is Running', opts)

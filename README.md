@@ -12,9 +12,9 @@
 
 ```js
 APP.js
-const WXBoot = require('./lib/wxboot');//常规安装
-const WXBoot = require('wxbootstart');//npm 安装
-WXBoot.A({
+require('./lib/wxboot');//常规安装
+require('wxbootstart');//npm 安装
+App.A({
     config:{
         route:'/pages/$page/$page', //必须指定路由。使用路由方法用
         pageApi:api,//页面挂载方法,挂载后可以直接用this调用
@@ -83,10 +83,10 @@ npm i wxbootstart
 ### 1）程序引入
 
 ```js
-const WXBoot = require('./lib/wxboot');//常规安装
-const WXBoot = require('wxbootstart');//npm 安装
+require('./lib/wxboot');//常规安装
+require('wxbootstart');//npm 安装
 //将App({})修改为
-WXBoot.A({
+App.A({
     config:{
         route:'/pages/$page/$page' //必须指定路由。使用路由方法用
     }
@@ -447,32 +447,32 @@ module.exports = {
 # 四、页面通信
 
 ```js
-/**挂载在WXBoot实例上
-*app.js 中 WXBoot
-*page.js 中 Page.A
+/**挂载在 message 实例上
+*app.js 中 App.A 
+*page.js 中 Page.P
 *component.js 中 Component.C
-*以下统一用{WXBoot}代替
+*以下统一用{message}代替
 */
 ```
 
-- {WXBoot}.**on**(key<`String`>, handler<`Function`>)
+- {message}.**on**(key<`String`>, handler<`Function`>)
 
   监听APP与页面间的消息
 
-- {WXBoot}.**emit**(key<`String`>, message<`任意`>)
+- {message}.**emit**(key<`String`>, message<`任意`>)
 
   监听APP与页面间的消息
 
-- {WXBoot}.**off**(key<`String`>, handler<`Function`>)
+- {message}.**off**(key<`String`>, handler<`Function`>)
 
   取消监听APP与页面间的消息
 
 ```js
-{WXBoot}.on('some_message', function (msg) {
+{message}.on('some_message', function (msg) {
       console.log('Receive message:', msg)
 })
-{WXBoot}.emit('some_message', 'it is a message')
-{WXBoot}.off('some_message', function () {
+{message}.emit('some_message', 'it is a message')
+{message}.off('some_message', function () {
       console.log('off some_message')
 })
 ```
