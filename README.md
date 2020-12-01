@@ -61,7 +61,7 @@ this.getByParams(collectionName,params) //返回data数组 报警返回[] 报警
 
 ## 1.将lib文件夹放到小程序项目同层目录下
 
-### 1）常规安装（仅26KB）
+### 1）常规安装（仅21KB）
 
 ```js
 lib/
