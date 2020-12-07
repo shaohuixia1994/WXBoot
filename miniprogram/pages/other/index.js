@@ -1,36 +1,21 @@
-// packageA/index/index.
+// pages/other/index.js
+Page.P({
 
-Page.P("pindex",{
-  onPreload:function(res){
-    console.log(res)
-  },
   /**
    * 页面的初始数据
    */
   data: {
 
   },
-  changeId(){
-   
-    this.$getStore("store").id= this.randomNum();
-    // this.setData({
-    //   globalData:this.store.globalData
-    // })
-    
-    
-  },
-  randomNum(start = 0, span = 10) {
-    return Math.floor(Math.random() * (span + 1)) + start
-},
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
-   
+  onLoad: function (options) {
+
   },
   onPageLaunch:function(){
-    console.log(" pa onPageLaunch")
+    console.log(" other onPageLaunch")
 },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -42,13 +27,8 @@ Page.P("pindex",{
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow:async function () {
-    this.$bindStore("store")
-    if(await this.canUseXXX()){
-      console.log("confirm")
-    }else{
-      console.log("confirmno")
-    }
+  onShow: function () {
+
   },
 
   /**

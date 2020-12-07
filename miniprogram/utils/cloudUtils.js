@@ -1,13 +1,12 @@
 module.exports = {
   collection: collection,
-  add:addOne,
-  getById:getById,
-  getByParams:getByParams,
-  updateById:updateById,
-  updateByParams:updateByParams,
-  callFunction:callFunction
+  callFun: callFunction,
+  $add: add,
+  $get: get,
+  $update: update,
+  $remove: remove,
+  $count:count
 }
-
 
 //取数据库实例。一个数据库对应一个实例
 function collection(collectionName) {
@@ -22,132 +21,202 @@ function collection(collectionName) {
  * 
  */
 
-//
-async function addOne(collectionName,data,openParse=false) {
-  if(openParse){
-    data = await parseQuery(data,this)
+//增
+async function add(collectionName, data, openParse = false) {
+  if (openParse) {
+    data = await parseQuery(data, this)
   }
-  return this.collection(collectionName).add({data}).then(res=>{
+  return this.collection(collectionName).add({
+    data
+  }).then(res => {
     return res._id
-  }).catch(res=>{ 
-   
+  }).catch(res => {
     return ""
   })
 }
 
-
-
+//查询
 //对应id取不到的时候，返回{}
-async function getById(collectionName,id) {
-  return this.collection(collectionName).doc(id).get().then(res=>{
-    return res.data
-  }).catch(res=>{ 
-    console.warn(`"collection":"${collectionName}","_id":"${id}"不存在`)
-    return {}
-  })
+async function get(collectionName, query, openParse = false) {
+  switch (type(query)) {
+    case "string":
+      return this.collection(collectionName).doc(query).get().then(res => {
+        return res.data
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}","_id":"${query}"不存在`)
+        return {}
+      })
+    case "object":
+      const defaultOptions = {
+        where: null,
+        order: null,
+        skip: 0,
+        limit: 20,
+        field: null,
+        pageIndex: 1
+      }
+      const parsequery = setDefaultOptions(query, defaultOptions);
+      let {
+        where, order, skip, limit, field, pageIndex
+      } = parsequery;
+      let collectionGet = this.collection(collectionName);
+      if (where != null) {
+        if (openParse) {
+          where = await parseQuery(where, this)
+        }
+        collectionGet = collectionGet.where(where)
+      }
+      if (order != null) {
+        if (type(order) == "object") {
+          collectionGet = collectionGet.orderBy(order.name, order.value);
+        }
+        if (type(order) == "array") {
+          order.forEach(orderItem => {
+            collectionGet = collectionGet.orderBy(orderItem.name, orderItem.value);
+          });
+        }
+      }
+      if (field) {
+        collectionGet = collectionGet.field(field);
+      }
+      if (pageIndex > 1) {
+        collectionGet = collectionGet.skip((pageIndex - 1) * limit).limit(limit);
+      } else {
+        collectionGet = collectionGet.skip(skip).limit(limit);
+      }
+      return collectionGet.get().then(res => {
+        return res.data
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}"不存在`)
+        return []
+      })
+    default:
+      console.warn(`"query":参数类型错误不存在`)
+      return null;
+  }
 }
 
-
-//{_openid:"{openid}"}  键值对 name value
-async function getByParams(collectionName,params,openParse=false) {
-  const defaultOptions = {where:null,order:null,skip:0,limit:20,field:null,pageIndex:1}
-  const parseParams = setDefaultOptions(params,defaultOptions);
-  let {where,order,skip,limit,field,pageIndex} = parseParams;
-  let collectionGet = this.collection(collectionName);
-
-  if(where!=null){
-    if(openParse){
-      where = await parseQuery(where,this)
-    }
-    collectionGet = collectionGet.where(where)
-  }
-  if(order!=null){
-    if(Object.prototype.toString.call(order)=="[object Object]"){
+async function count(collectionName, query, openParse = false) {
+  switch (type(query)) {
      
-      collectionGet = collectionGet.orderBy(order.name,order.value);
-    }
-    if(Object.prototype.toString.call(order)=="[object Array]"){
-    order.forEach(orderItem => {
-      collectionGet = collectionGet.orderBy(orderItem.name,orderItem.value);
-    });}
+    case "object":
+      let collectionUpdate = this.collection(collectionName);
+      if (openParse) {
+        query = await parseQuery(query, this)
+      }
+      collectionUpdate = collectionUpdate.where(query)
+      return collectionUpdate.count().then(res => {
+        return res.total
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}"不存在`)
+        return 0
+      })
+    default:
+      return this.collection(collectionName).count().then(res => {
+        return res.total
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}"不存在`)
+        return 0
+      })
+     
   }
-  if(field){
-    collectionGet = collectionGet.field(field);
-  }
-  if(pageIndex>1){
-    collectionGet = collectionGet.skip((pageIndex-1)*limit).limit(limit);
-  } else {
-    collectionGet = collectionGet.skip(skip).limit(limit);
-  }
-  return collectionGet.get().then(res=>{
-    return res.data
-  }).catch(res=>{ 
-    console.warn(`"collection":"${collectionName}"不存在`)
-    return []
-  })
 }
+
 
 //修改
-async function updateById(collectionName,id,data,openParse) {
-  if(openParse){
-    data = await parseQuery(data,this)
+async function update(collectionName, query, updata, openParse = false) {
+  switch (type(query)) {
+    case "string":
+      return this.collection(collectionName).doc(query).update({
+        data: updata
+      }).then(res => {
+        return res.stats.updated
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}","_id":"${query}"不存在`)
+        return 0
+      })
+    case "object":
+      let collectionUpdate = this.collection(collectionName);
+      if (openParse) {
+        query = await parseQuery(query, this)
+      }
+      collectionUpdate = collectionUpdate.where(query)
+      return collectionUpdate.update({
+        data: updata
+      }).then(res => {
+        return res.stats.updated
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}"不存在`)
+        return 0
+      })
+    default:
+      console.warn(`"query":参数类型错误不存在`)
+      return 0
   }
-  return this.collection(collectionName).doc(id).update({data}).then(res=>{
-    return res.stats.updated
-  }).catch(res=>{ 
-    console.warn(`"collection":"${collectionName}","_id":"${id}"不存在`)
-    return {}
-  })
 }
-//_openid:"{openid}" 当使用自定义规则时 就可以直接用"{openid}"替换openid
-async function updateByParams(collectionName,where,data,openParse=false) {
-  
-  let collectionUpdate = this.collection(collectionName);
 
-  if(where!=null){
-    if(openParse){
-      where = await parseQuery(where,this)
-    }
-    
+
+//删除
+async function remove(collectionName, query, openParse=false) {
+  switch (type(query)) {
+    case "string":
+      return this.collection(collectionName).doc(query).remove().then(res => {
+        return res
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}","_id":"${query}"不存在`)
+        return {}
+      })
+    case "object":
+      let collectionRemove = this.collection(collectionName);
+      if (openParse) {
+        query = await parseQuery(query, this)
+      }
+      collectionRemove = collectionRemove.where(query)
+      return collectionRemove.remove().then(res => {
+        return res
+      }).catch(res => {
+        console.warn(`"collection":"${collectionName}"不存在`)
+        return []
+      })
+    default:
+      console.warn(`"query":参数类型错误不存在`)
+      return 0
   }
-  console.log(where)
-  collectionUpdate = collectionUpdate.where(where)
-  return collectionUpdate.update({data}).then(res=>{
-    return res.stats.updated
-  }).catch(res=>{ 
-    console.warn(`"collection":"${collectionName}"不存在`)
-    return []
-  })
 }
 
 
-function setDefaultOptions(options={}, defaultOptions={}) {
+function setDefaultOptions(options = {}, defaultOptions = {}) {
   return Object.assign(defaultOptions, options);
 }
 
 function promisify(api) {
-  return (options, ...params) => {
+  return (options, ...query) => {
     return new Promise((resolve, reject) => {
       api(Object.assign({}, options, {
         success: resolve,
         fail: reject
-      }), ...params);
+      }), ...query);
     })
   }
 }
 
-async function callFunction(options){
+async function callFunction(options) {
   return await this.cloud.callFunction(options)
 }
 
-
-async function parseQuery(where,self){
-  let whereStr = JSON.stringify(where);
-    if(whereStr.indexOf("{openid}")>-1){
-      let openid = await self.$getOpenid();
-      return JSON.parse(whereStr.replace(/{openid}/g,openid));
-    } else{
-      return where
-    }
-
+var undef = void(0)
+function type(obj) {
+  if (obj === null) return 'null'
+  else if (obj === undef) return 'undefined'
+  var m = /\[object (\w+)\]/.exec(Object.prototype.toString.call(obj))
+  return m ? m[1].toLowerCase() : ''
+}
+async function parseQuery(query, self) {
+  let queryStr = JSON.stringify(query);
+  if (queryStr.indexOf("{openid}") > -1) {
+    let openid = await self.$getOpenid();
+    return JSON.parse(queryStr.replace(/{openid}/g, openid));
+  } else {
+    return query
+  }
 }

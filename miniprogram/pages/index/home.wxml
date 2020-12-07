@@ -5,7 +5,7 @@
 <view class="intro">
     蜡笔小新一家人
 </view>
-<button size="mini" bindtap="route">ces</button>
+<button size="mini" bindtap="routePa">ces</button>
 <view class='btns'>
     <button size="mini" bindtap="timeFastForward">五年后</button>
 

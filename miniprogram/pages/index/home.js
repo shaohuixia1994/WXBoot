@@ -1,5 +1,6 @@
 // miniprogram/pages/index/index.js
 import api from "../../utils/promiseUtils"
+import login from "../../login/login"
 var pageData={
   id:2
 }
@@ -13,26 +14,32 @@ Page.P('in',{
     name: '蜡笔小新',
     info: { height: 140, color: '黄色' },
     desc: [{ age: 8 }, '靓仔'],
-    family: [{ num: 4 }, '四口之家', [{ dad: '野原广治' }, { mum: '美伢' }, { son: '蜡笔小新' }, { dog: '小白', color: '白色' }]]
+    family: [{ num: 4 }, '四口之家', [{ dad: '野原广治' }, { mum: '美伢' }, { son: '蜡笔小新' }, { dog: '小白', color: '白色' }]],
+    
 },
-
+mixins:[login,Page.P.Options],
+  onPageLaunch:function(){
+    console.log(" index onPageLaunch")
+},
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    console.log(this.$curPageName())
+    console.log(this.$name)
     console.log(await this.$getOpenid())
-    console.log(await this.add("article",{auth:"{openid}"},true))
+    console.log(await this.$add("article",{auth:"{openid}"},true))
     const  db = this.collection("article");
    console.log(this.collectionList)
   
    const  db2 = this.collection("article")
-  console.log(await this.getById("article","6127fe145fc23579007fb63e1c15f221"))
-  console.log(await this.updateById("article","6127fe145fc23579007fb63e1c15f221",{name:1}))
-  console.log(await this.getByParams("article",{
+  console.log(await this.$get("article","6127fe145fc23579007fb63e1c15f221"))
+  console.log(await this.$update("article","6127fe145fc23579007fb63e1c15f221",{name:1}))
+  console.log(await this.$get("article",{
     where:{_openid:"{openid}"},
     order:[{name:"name",value:"desc"}]
   }))
-  console.log(await this.updateByParams("article",
+  console.log(await this.$update("article",
   {auth:"{openid}"},{name:10}))
     console.log(this.$consts);
     console.log(this.$conUsername);
@@ -44,11 +51,7 @@ Page.P('in',{
       list:[1,2,3,4,5]
     })
    
-    if(await this.canUseXXX()){
-      console.log("confirm")
-    }else{
-      console.log("confirmno")
-    }
+   
     this.$setData({
       list:[,,1]
     })
@@ -102,12 +105,15 @@ console.log(api)
 },
 changeId(){
   pageData.id= this.randomNum();
-  // this.$getStore("store").id= this.randomNum();
+  this.$getStore("store").id= this.randomNum();
   // this.setData({
   //   globalData:this.store.globalData
   // })
  
   
+},
+routePa(){
+  this.$route("/packageA/index/index")
 },
 /**
  * 生成随机数
@@ -148,22 +154,27 @@ timeRandom() {
   onReady: function () {
 
   },
-  route: function () {
-    this.$route("/packageA/index/index")
-   // this.$route("/pages/test/index")
+  // route: function () {
+  //   this.$route("/packageA/index/index")
+  //  // this.$route("/pages/test/index")
   
-  },
+  // },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow:async function () {
+    if(await this.canUseXXX()){
+      console.log("confirm")
+    }else{
+      console.log("confirmno")
+    }
     this.$preload("pindex");
     console.log(this.$globalData());
     this.$bindPageStore(pageData)
     
-    // this.$bindStore("store",function(e){
-    //   console.log(e)
-    // });
+    this.$bindStore("store",function(e){
+      console.log(e)
+    });
     //   this.$bindStore("store",function(e){
     //   console.log(e)
     // });

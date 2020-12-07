@@ -2,8 +2,9 @@
 // const {WXBoot} = require('wxbootstart');
 
 
-const WXBoot = require('./lib/wxboot');
-console.log(WXBoot)
+require('./lib-webpack/wxboot');
+import login from "./login/login"
+
 import utils from "./utils/utils"
 import constants from "./constants/constants"
 App.A({
@@ -17,7 +18,8 @@ App.A({
     updata:{
       arrObjPath:false,
       arrCover:false
-    }
+    },
+    mixins:[login,App.A.Options] 
 
   },
   onLaunch: function (opts) {
