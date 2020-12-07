@@ -20,7 +20,7 @@ Page.P('in',{
 mixins:[login,Page.P.Options],
   onPageLaunch:function(){
     console.log(" index onPageLaunch")
-},
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -28,11 +28,11 @@ mixins:[login,Page.P.Options],
     console.log(this.$curPageName())
     console.log(this.$name)
     console.log(await this.$getOpenid())
-    console.log(await this.$add("article",{auth:"{openid}"},true))
-    const  db = this.collection("article");
-   console.log(this.collectionList)
+    console.log(await this.$add("article",{auth:"{openid}"}))
+    const  db = this.$collection("article");
+   console.log(this.$collectionList)
   
-   const  db2 = this.collection("article")
+   const  db2 = this.$collection("article")
   console.log(await this.$get("article","6127fe145fc23579007fb63e1c15f221"))
   console.log(await this.$update("article","6127fe145fc23579007fb63e1c15f221",{name:1}))
   console.log(await this.$get("article",{

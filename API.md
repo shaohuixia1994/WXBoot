@@ -22,7 +22,17 @@ App.A({
          initCloud:{ 
              // env: '',
            traceUser: true,},//初始化云开发参数
-    }
+    }，
+    getOpenidFunc: function(){
+    return this.cloud.callFunction({
+      name:"getWXContext"
+    }).then(res=>{
+      return  res.result.openid;
+    }).catch(err=>{ 
+      console.error(err)
+      return ""
+    })
+  },// 云开发获取openid必须函数 getOpenidFunc
 })
 
 ```
@@ -34,7 +44,7 @@ App.A({
 ```js
 this.$getOpenid();//app.js 和 page.js可用 //async函数 优先：内存>缓存>云函数(需创建默认函数getWXContext)
 this.$db() 或 this.db 均可以取到当前页面唯一 wx.cloud.database()实例
-this.collection("collectionName") 当前页面数据表对应的唯一实例
+this.$collection("collectionName") 当前页面数据表对应的唯一实例
 ```
 
 ## 3.云函数插件（utils/cloudUtils.js）
@@ -44,8 +54,7 @@ this.collection("collectionName") 当前页面数据表对应的唯一实例
 ```js
 page.js async函数
 对返回结果 异常进行细节处理
-this.collection(collectionName)//数据表单例
-this.callFun(options) //相当于wx.cloud.callFunction(options)
+this.$callFun(options) //相当于wx.cloud.callFunction(options)
 this.$add(collectionName, data, openParse = false)
 this.$get(collectionName, query, openParse = false) 
 this.$count(collectionName, query, openParse = false)

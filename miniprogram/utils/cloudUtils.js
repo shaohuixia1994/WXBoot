@@ -1,6 +1,6 @@
 module.exports = {
-  collection: collection,
-  callFun: callFunction,
+
+  $callFun: callFunction,
   $add: add,
   $get: get,
   $update: update,
@@ -9,12 +9,7 @@ module.exports = {
 }
 
 //取数据库实例。一个数据库对应一个实例
-function collection(collectionName) {
-  if (!this.collectionList.hasOwnProperty(collectionName)) {
-    this.collectionList[collectionName] = this.db.collection(collectionName)
-  }
-  return this.collectionList[collectionName]
-}
+
 /**
  * 封装查询操作
  * 增 查 改 删
@@ -26,7 +21,7 @@ async function add(collectionName, data, openParse = false) {
   if (openParse) {
     data = await parseQuery(data, this)
   }
-  return this.collection(collectionName).add({
+  return this.$collection(collectionName).add({
     data
   }).then(res => {
     return res._id
@@ -40,7 +35,7 @@ async function add(collectionName, data, openParse = false) {
 async function get(collectionName, query, openParse = false) {
   switch (type(query)) {
     case "string":
-      return this.collection(collectionName).doc(query).get().then(res => {
+      return this.$collection(collectionName).doc(query).get().then(res => {
         return res.data
       }).catch(res => {
         console.warn(`"collection":"${collectionName}","_id":"${query}"不存在`)
@@ -59,7 +54,7 @@ async function get(collectionName, query, openParse = false) {
       let {
         where, order, skip, limit, field, pageIndex
       } = parsequery;
-      let collectionGet = this.collection(collectionName);
+      let collectionGet = this.$collection(collectionName);
       if (where != null) {
         if (openParse) {
           where = await parseQuery(where, this)
@@ -100,7 +95,7 @@ async function count(collectionName, query, openParse = false) {
   switch (type(query)) {
      
     case "object":
-      let collectionUpdate = this.collection(collectionName);
+      let collectionUpdate = this.$collection(collectionName);
       if (openParse) {
         query = await parseQuery(query, this)
       }
@@ -112,7 +107,7 @@ async function count(collectionName, query, openParse = false) {
         return 0
       })
     default:
-      return this.collection(collectionName).count().then(res => {
+      return this.$collection(collectionName).count().then(res => {
         return res.total
       }).catch(res => {
         console.warn(`"collection":"${collectionName}"不存在`)
@@ -127,7 +122,7 @@ async function count(collectionName, query, openParse = false) {
 async function update(collectionName, query, updata, openParse = false) {
   switch (type(query)) {
     case "string":
-      return this.collection(collectionName).doc(query).update({
+      return this.$collection(collectionName).doc(query).update({
         data: updata
       }).then(res => {
         return res.stats.updated
@@ -136,7 +131,7 @@ async function update(collectionName, query, updata, openParse = false) {
         return 0
       })
     case "object":
-      let collectionUpdate = this.collection(collectionName);
+      let collectionUpdate = this.$collection(collectionName);
       if (openParse) {
         query = await parseQuery(query, this)
       }
@@ -160,14 +155,14 @@ async function update(collectionName, query, updata, openParse = false) {
 async function remove(collectionName, query, openParse=false) {
   switch (type(query)) {
     case "string":
-      return this.collection(collectionName).doc(query).remove().then(res => {
+      return this.$collection(collectionName).doc(query).remove().then(res => {
         return res
       }).catch(res => {
         console.warn(`"collection":"${collectionName}","_id":"${query}"不存在`)
         return {}
       })
     case "object":
-      let collectionRemove = this.collection(collectionName);
+      let collectionRemove = this.$collection(collectionName);
       if (openParse) {
         query = await parseQuery(query, this)
       }

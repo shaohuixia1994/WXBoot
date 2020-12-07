@@ -19,8 +19,17 @@ App.A({
       arrObjPath:false,
       arrCover:false
     },
-    mixins:[login,App.A.Options] 
-
+    mixins:[login,App.A.Options] ,
+  },
+  getOpenidFunc: function(){
+    return this.cloud.callFunction({
+      name:"getWXContext"
+    }).then(res=>{
+      return  res.result.openid;
+    }).catch(err=>{ 
+      console.error(err)
+      return ""
+    })
   },
   onLaunch: function (opts) {
 
