@@ -25,6 +25,7 @@ mixins:[login,Page.P.Options],
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    console.log(await this.$getOpenid())
     console.log(this.$curPageName())
     console.log(this.$name)
     console.log(await this.$getOpenid())
@@ -163,11 +164,11 @@ timeRandom() {
    * 生命周期函数--监听页面显示
    */
   onShow:async function () {
-    if(await this.canUseXXX()){
-      console.log("confirm")
-    }else{
-      console.log("confirmno")
-    }
+    // if(await this.canUseXXX()){
+    //   console.log("confirm")
+    // }else{
+    //   console.log("confirmno")
+    // }
     this.$preload("pindex");
     console.log(this.$globalData());
     this.$bindPageStore(pageData)

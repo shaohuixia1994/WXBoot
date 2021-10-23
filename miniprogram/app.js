@@ -9,9 +9,18 @@ import utils from "./utils/utils"
 import constants from "./constants/constants"
 App.A({
   config: {
+    initResource:{
+      // resourceAppid:"",
+      // resourceEnv:"",
+    },
     initCloud:{ 
-      // env: '',
-    traceUser: true,},
+     
+      // resourceAppid:"",
+      // resourceEnv:"",
+      env: '',
+      traceUser: true,
+    
+      },
     route: '/pages/$page/$page',
     pageApi: utils,
     consts: constants,
@@ -19,7 +28,7 @@ App.A({
       arrObjPath:false,
       arrCover:false
     },
-    mixins:[login,App.A.Options] ,
+    // mixins:[login,App.A.Options] ,
   },
   getOpenidFunc: function(){
     return this.cloud.callFunction({

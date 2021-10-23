@@ -64,7 +64,7 @@ module.exports = {
 
 # 4.云开发相关
 
-> 1）全局cloud管理，可进一步支持tcb，其他资源的cloud实例等
+> 1）全局cloud管理，支持tcb，其他资源的cloud实例等
 >
 > 2）openid全局管理，内存>缓存>云函数
 >

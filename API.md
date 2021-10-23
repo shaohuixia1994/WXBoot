@@ -8,7 +8,7 @@
 
 ## 1.云开发初始化
 
-
+### （支持第三方平台、共享资源等）
 
 ```js
 APP.js
@@ -19,15 +19,22 @@ App.A({
         route:'/pages/$page/$page', //必须指定路由。使用路由方法用
         pageApi:api,//页面挂载方法,挂载后可以直接用this调用
         consts:constants,//页面全局常量参数
-         initCloud:{ 
+        initResource:{
+        	resourceAppid:"",
+      		resourceEnv:"",
+        },//初始化第三方平台云开发参数
+        initCloud:{ 
              // env: '',
-           traceUser: true,},//初始化云开发参数
+           traceUser: true,
+        },//初始化云开发参数
     }，
+    
     getOpenidFunc: function(){
     return this.cloud.callFunction({
       name:"getWXContext"
-    }).then(res=>{
+    }).then(res=>{ 
       return  res.result.openid;
+      //return  res.result.event.userInfo.openId;初始化第三方平台云开发openid
     }).catch(err=>{ 
       console.error(err)
       return ""
@@ -35,6 +42,11 @@ App.A({
   },// 云开发获取openid必须函数 getOpenidFunc
 })
 
+page.js
+onLoad:async function (options) {
+ 	//初始化第三方资源
+    await this.$initResource();
+}
 ```
 
 ## 2.全局方法
