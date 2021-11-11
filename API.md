@@ -17,7 +17,9 @@ require('wxbootstart');//npm 安装
 App.A({
     config:{
         route:'/pages/$page/$page', //必须指定路由。使用路由方法用
-        pageApi:api,//页面挂载方法,挂载后可以直接用this调用
+        pageApi:api,//页面挂载方法,挂载后可以直接用this调用,
+        appApi:api,//app挂载方法,挂载后可以直接用this调用
+        compApi:api,//页面挂载方法,挂载后可以直接用this调用
         consts:constants,//页面全局常量参数
         initResource:{
         	resourceAppid:"",
@@ -44,8 +46,7 @@ App.A({
 
 page.js
 onLoad:async function (options) {
- 	//初始化第三方资源
-    await this.$initResource();
+ 	
 }
 ```
 
@@ -55,11 +56,11 @@ onLoad:async function (options) {
 
 ```js
 this.$getOpenid();//app.js 和 page.js可用 //async函数 优先：内存>缓存>云函数(需创建默认函数getWXContext)
-this.$db() 或 this.db 均可以取到当前页面唯一 wx.cloud.database()实例
-this.$collection("collectionName") 当前页面数据表对应的唯一实例
+this.$db() 或 this.db 均可以取到全局唯一 this.cloud.database()实例
+this.$collection("collectionName") 全局数据表对应的唯一实例
 ```
 
-## 3.云函数插件（utils/cloudUtils.js）
+## 3.云函数插件（utils/cloudUtils.js）已经内嵌 (app中不能调用this.db)
 
 页面挂载参见config
 
